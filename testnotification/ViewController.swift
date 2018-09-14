@@ -9,7 +9,7 @@
 import UIKit
 import UserNotifications // THIS IS IMPORTANT - ALSO SEE DELEGATE
 
-class ViewController: UIViewController, UNUserNotificationCenterDelegate {
+class ViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +30,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         let content = UNMutableNotificationContent()
         content.title = "Tapper"
         content.body = "You tapped a button 2 seconds ago"
+        content.subtitle = "Subtitle"
+
 
         // set up the trigger - this can be UNCalendarNotificationTrigger, UNTimeIntervalNotificationTrigger, or UNLocationNotificationTrigger
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: (3), repeats: false)
@@ -37,7 +39,8 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
         // Create the request
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString,
-                                            content: content, trigger: trigger)
+                                            content: content,
+                                            trigger: trigger)
 
         print(request)
         // Schedule the request with the system.
@@ -51,12 +54,7 @@ class ViewController: UIViewController, UNUserNotificationCenterDelegate {
 
     }
 
-    // UNNotification Delegate Methods
 
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-
-        completionHandler([.badge])
-    }
 
 
 
