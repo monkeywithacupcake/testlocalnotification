@@ -1,6 +1,6 @@
 # Test Notification
 
-![Notification Badge]("/tw.png")
+![Notification Badge](tw.png)
 
 
 
