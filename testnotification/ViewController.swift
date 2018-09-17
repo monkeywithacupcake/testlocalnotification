@@ -7,51 +7,42 @@
 //
 
 import UIKit
-import UserNotifications // THIS IS IMPORTANT - ALSO SEE DELEGATE
+import UserNotifications // THIS IS IMPORTANT
 
 class ViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
     @IBAction func btnTapped(_ sender: UIButton) {
-        // if someone taps our button, this happens
-
-        // create our notification content
 
         let content = UNMutableNotificationContent()
-        content.title = "Tapper"
-        content.body = "You tapped a button 2 seconds ago"
-        content.subtitle = "Subtitle"
-
+        // content.title = "Tapper: YOU DO NOT NEED THIS"
+        content.body = "You tapped a button 3 seconds ago"
+        // content.subtitle = "Subtitle: YOU DO NOT NEED THIS"
 
         // set up the trigger - this can be UNCalendarNotificationTrigger, UNTimeIntervalNotificationTrigger, or UNLocationNotificationTrigger
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: (3), repeats: false)
-        print(trigger)
         // Create the request
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString,
                                             content: content,
                                             trigger: trigger)
 
-        print(request)
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.add(request) { (error) in
-            if error != nil {
-                // Handle any errors.
-                print(error as Any)
+
+        notificationCenter.getNotificationSettings { (settings) in
+            // Do not schedule notifications if not authorized.
+            guard settings.authorizationStatus == .authorized else {return}
+
+            notificationCenter.add(request) { (error) in
+                if error != nil {
+                    // Handle any errors.
+                    print(error as Any)
+                }
             }
         }
-
     }
 
 
